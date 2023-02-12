@@ -245,7 +245,7 @@ printf("\n");
 
       gdImageLine(im, 0, axe_y, box_x, axe_y, grey);
       sprintf(graduation, "%d", box_y - axe_y);
-      printf("graduation = %s", graduation);
+      //printf("graduation = %s", graduation);
       strncat(graduation, &m, 1);
       strncat(graduation, &mm, 1);
       strncat(graduation, &s, 1);
@@ -273,7 +273,7 @@ printf("\n");
       axe_x += LL;
 
       sprintf(graduation_x, "%d", axe_x/20*10);
-      printf("graduation = %s", graduation_x);
+      //printf("graduation = %s", graduation_x);
       strncat(graduation_x, &S, 1);
       gdImageString (im,gdFontGetLarge(),axe_x,2,graduation_x,black);
 

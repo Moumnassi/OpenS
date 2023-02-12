@@ -194,19 +194,13 @@ int main() {
   /* Declare color indexes */
   int black, grey, blue_D, blue, red, green;
   int white;
-  int box_x= tab_Time_in_min[N_lignes-1]*20;
-  int box_y= tab_velocity[N_lignes-1]+50;
-
-  printf("tab_velocity :%d ", tab_Time_in_min[N_lignes-1]);
-printf("\n");
-printf("\n");
-printf("\n");
-
+  int box_x= 920;
+  int box_y=200;
 
   /* Allocate the image: 64 pixels across by 64 pixels tall */
   //im = gdImageCreate(64, 64);
   //im = gdImageCreate(tab_Time_in_min[N_lignes], 60);
-  im = gdImageCreate(box_x, box_y*0.7);
+  im = gdImageCreate(box_x, box_y);
 
 
   /* Allocate the color black (red, green and blue all minimum).
@@ -223,69 +217,117 @@ printf("\n");
   /* Allocate the color white (red, green and blue all maximum). */
   white = gdImageColorAllocate(im, 255, 255, 255);
 
-  gdImageFilledRectangle(im, 0,0, box_x, box_y*0.7, white);
+  gdImageFilledRectangle(im, 0,0, box_x, box_y, white);
 
   /* Draw a line from the upper left to the lower right,
     using white color index. */
   //gdImageLine(im, 0, box_y-0, 0, box_y-box_y, white);
   //gdImageLine(im, 0, box_y-1, box_x, box_y-1, white);
 
-
-
   // Legendes y
-  int DD = 40;
-  int yy = floor(box_y*0.7/DD);
+  int yy = floor(box_y/50);
   int axe_y = 0;
   char graduation [10];
-  char m = 'm';
-  char mm = '/';
-  char s = 's';
   for(int i=0; i <= yy; i++)
   {
 
       gdImageLine(im, 0, axe_y, box_x, axe_y, grey);
-      sprintf(graduation, "%d", box_y - axe_y);
+      /*sprintf(graduation, "%d", axe_y);
       printf("graduation = %s", graduation);
-      strncat(graduation, &m, 1);
-      strncat(graduation, &mm, 1);
-      strncat(graduation, &s, 1);
-      gdImageString (im,gdFontGetLarge(),20,axe_y,graduation,black);
+      gdImageString (im,gdFontGetLarge(),20,axe_y,graduation,black);*/
       gdImageSetThickness (im,2);
-      gdImageLine(im, 0, axe_y, DD, axe_y, black);
-      axe_y += DD;
+      gdImageLine(im, 0, axe_y, 50, axe_y, black);
+      axe_y += 50;
 
   }
+       //gdImageLine(im, 0, 100, 450, 100, grey);
+       //gdImageLine(im, 0, 200, 450, 200, grey);
+       //gdImageLine(im, 0, 300, 450, 300, grey);
+       //gdImageLine(im, 0, 400, 450, 400, grey);
+       //gdImageLine(im, 0, 450, 450, 450, grey);
 
-
-
-  // Legendes x
-  int LL= 60;
-  int xx = floor(box_x/LL);
+       // Legendes x
+  int xx = floor(box_x/60);
   int axe_x = 0;
   char graduation_x[10];
-  char S = 's';
+  char graduation_x_h[10];
+  char H = 'H';
   for(int i=0; i <= xx ; i++)
   {
 
-      gdImageLine(im, axe_x , 0 , axe_x , box_y*0.7, grey);
+      gdImageLine(im, axe_x , 0 , axe_x , box_y, grey);
       gdImageSetThickness (im,2);
-      gdImageLine(im, axe_x, 0, axe_x, 2, black);
-      axe_x += LL;
+      gdImageLine(im, axe_x, 0, axe_x, 20, black);
+      axe_x += 60;
 
-      sprintf(graduation_x, "%d", axe_x/20*10);
+      sprintf(graduation_x, "%d", axe_x);
       printf("graduation = %s", graduation_x);
-      strncat(graduation_x, &S, 1);
-      gdImageString (im,gdFontGetLarge(),axe_x,2,graduation_x,black);
+      gdImageString (im,gdFontGetLarge(),axe_x,20,graduation_x,black);
+
+      int heure = i+18;
+      if (heure < 24)
+      {
+      sprintf(graduation_x_h, "%d", heure);
+      printf("graduation = %s", graduation_x_h);
+      // append H to graduation_x_h
+          strncat(graduation_x_h, &H, 1);
+      gdImageString (im,gdFontGetLarge(),axe_x,40,graduation_x_h,black);
+      }
+      else {
+          sprintf(graduation_x_h, "%d", heure-24);
+          printf("graduation = %s", graduation_x_h);
+          // append H to graduation_x_h
+              strncat(graduation_x_h, &H, 1);
+          gdImageString (im,gdFontGetLarge(),axe_x,40,graduation_x_h,black);
+      }
 
   }
+       /*gdImageLine(im, 0, 0, 0, 450, grey);
+       gdImageLine(im, 50, 0 ,50, 450, grey);
+       gdImageLine(im, 100, 0,100, 450, grey);
+       gdImageLine(im, 150, 0, 150, 450, grey);
+       gdImageLine(im, 200, 0, 200, 450, grey);
+       gdImageLine(im, 250, 0, 250, 450, grey);
+       gdImageLine(im, 300, 0, 300, 450, grey);
+       gdImageLine(im, 350, 0, 350, 450, grey);
+       gdImageLine(im, 400, 0, 400, 450, grey);
+       gdImageLine(im, 450, 0, 450, 450, grey);*/
+
+/*
+  //Discretisation des axes x
+    int x=0;
+    for (x=0; x < 9 ; x++)
+    {
+    gdImageSetThickness (im,2);
+    gdImageLine(im, x*50, 0, x*50, 10, black);
+    }
+
+    //Discretisation des axes y
+      int y=0;
+      char graduation1 [3000];
+      for (y=1; y < 8 ;y++)
+      {
+      //graduation1 = y100;
+      sprintf(graduation1, "%d", y*100);
+      printf("graduation = %s", graduation1);
+      gdImageString (im,gdFontGetLarge(),20,y*100,graduation1,black);
+      gdImageSetThickness (im,2);
+      gdImageLine(im, 0, y*100, 10, y*100, black);
+      }
+
+*/
 
 
+    char xlabel[] = "--Hour--";
+    char max_flights[] = "Max_flights = 65";
+    char min_flights[] = "Min_flights = 1";
+    gdImageString (im,gdFontGetLarge(),358,65,xlabel,black);
+    gdImageString (im,gdFontGetLarge(),600,75,max_flights,black);
+    gdImageString (im,gdFontGetLarge(),600,150,min_flights,black);
 
-    char xlabel[] = "--Velocity of the flight in m/s--";
-    gdImageString (im,gdFontGetLarge(),box_x*0.4,box_y - 0.5*box_y,xlabel,black);
-
-
-
+       //valeurs seuil ok NOK
+       gdImageDashedLine(im, 0, 0.7*(box_y-65), box_x, 0.7*(box_y-65), red);
+       gdImageDashedLine(im, 0, 0.7*(box_y-1), box_x, 0.7*(box_y-1), blue);
 
 
 
@@ -298,8 +340,8 @@ printf("\n");
   int cont=0;
   for (cont=0; cont < N_lignes-1 ; cont++)
   {
-    gdImageSetThickness (im,3);
-    gdImageLine(im, tab_Time_in_min[cont]*20, box_y-tab_velocity[cont], tab_Time_in_min[cont+1]*20, box_y-tab_velocity[cont+1], green);
+    gdImageSetThickness (im,5);
+    gdImageLine(im, tab_Time_in_min[cont], 0.7*(box_y-tab_velocity[cont]), tab_Time_in_min[cont+1], 0.7*(box_y-tab_velocity[cont+1]), green);
     /*printf("\n");
     printf("tab_Time_in_min :%d  \t\t | ", tab_Time_in_min[cont]);
     printf("\n");
@@ -313,7 +355,7 @@ printf("\n");
 
 
 
-/*
+
 
 
   //gdImageString
@@ -337,7 +379,7 @@ printf("\n");
                       (unsigned char*)v, foreground);
 
 
-*/
+
 
   /* Open a file for writing. "wb" means "write binary", important
     under MSDOS, harmless under Unix. */
